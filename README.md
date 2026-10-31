@@ -3,23 +3,23 @@
 Briques de perception par capteurs et de positionnement, réimplémentées avec NumPy
 uniquement, chacune accompagnée de tests qui la comparent à un résultat connu.
 
-Statut : en construction. Ce dépôt ne contient pour l'instant que la structure ;
-chaque module est ajouté avec ses tests, pas avant.
+Statut : en construction. Chaque module n'est ajouté qu'avec ses tests.
 
-## Périmètre visé
+## Contenu
 
-| Domaine | Briques |
+| Module | Briques |
 |---|---|
-| Modèle de caméra | projection, rétroprojection, champ de vision |
-| Réseaux de neurones | softmax, entropie croisée, convolution, pooling |
-| Métriques | IoU, GIoU, précision/rappel, matrice de confusion, mIoU |
-| Détection | suppression des non-maxima (NMS), appariement, précision moyenne |
-| Positionnement GNSS | moindres carrés de Gauss-Newton sur pseudodistances |
+| `camera` | projection sténopé, rétroprojection, champ de vision |
+| `nn` | softmax stable, entropie croisée, convolution 2D (pas, remplissage, dilatation), max pooling, champ réceptif |
+| `boxes` | IoU matriciel, GIoU, encodage/décodage par ancres, suppression des non-maxima (NMS) |
+| `metrics` | précision/rappel, fréquences et poids de classes, matrice de confusion, IoU/mIoU, appariement des détections, courbe précision-rappel, précision moyenne |
+
+À venir : positionnement GNSS par moindres carrés (Gauss-Newton) sur pseudodistances.
 
 ## Principes
 
 - NumPy seul pour les algorithmes ; aucune bibliothèque de vision ou d'apprentissage dans le cœur.
-- Chaque fonction a un test contre un cas calculé à la main ou une référence indépendante.
+- Chaque fonction a un test contre une valeur calculée à la main (26 tests).
 - Aucune donnée, aucun sujet ni code tiers n'est inclus.
 
 ## Développement
