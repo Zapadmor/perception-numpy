@@ -5,6 +5,13 @@ uniquement, chacune accompagnée de tests qui la comparent à un résultat connu
 
 Statut : en construction. Chaque module n'est ajouté qu'avec ses tests.
 
+## Origine
+
+Travail universitaire : les algorithmes ont été écrits lors d'exercices de formation d'ingénieur.
+Ce dépôt en est une mise en forme pour publication : formatage, documentation et tests ont été
+repris et rédigés avec l'aide d'un assistant IA ; la logique des fonctions est celle des exercices.
+Les énoncés, squelettes de code et données fournis par la formation ne sont pas inclus.
+
 ## Contenu
 
 | Module | Briques |
