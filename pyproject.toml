@@ -3,7 +3,7 @@ name = "perception-numpy"
 version = "0.1.0"
 description = "Briques de perception et de positionnement implémentées avec NumPy, vérifiées par des tests."
 requires-python = ">=3.12"
-dependencies = ["numpy"]
+dependencies = ["numpy", "scipy"]
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff"]

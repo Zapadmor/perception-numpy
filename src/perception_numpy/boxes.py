@@ -1,6 +1,7 @@
 """Boîtes englobantes au format (u1, v1, u2, v2) : coin haut-gauche, coin bas-droit."""
 
 import numpy as np
+from scipy import ndimage
 
 
 def box_iou(a, b):
@@ -96,3 +97,25 @@ def nms(boxes, scores, tau=0.5):
         ious = box_iou(boxes[i], boxes[order[1:]])[0]
         order = order[1:][ious <= tau]
     return np.array(keep)
+
+
+def boxes_from_segmentation(mask, class_ids, ego=None, min_area=300):
+    """Boîtes (M, 4) des composantes connexes dont la classe est dans `class_ids`.
+
+    Les composantes de moins de `min_area` pixels et celles qui touchent le masque `ego` sont
+    écartées.
+    """
+    boxes = []
+    labeled, _ = ndimage.label(np.isin(mask, class_ids))
+    slices = ndimage.find_objects(labeled)
+    for sl in slices:
+        if sl is None:
+            continue
+        v1, v2 = sl[0].start, sl[0].stop
+        u1, u2 = sl[1].start, sl[1].stop
+        if (v2 - v1) * (u2 - u1) < min_area:
+            continue
+        if ego is not None and np.any(ego[v1:v2, u1:u2]):
+            continue
+        boxes.append([u1, v1, u2, v2])
+    return np.array(boxes, dtype=float).reshape(-1, 4)

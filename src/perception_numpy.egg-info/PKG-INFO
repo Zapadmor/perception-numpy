@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: perception-numpy
+Version: 0.1.0
+Summary: Briques de perception et de positionnement implémentées avec NumPy, vérifiées par des tests.
+Requires-Python: >=3.12
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: scipy
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Dynamic: license-file

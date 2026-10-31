@@ -63,3 +63,33 @@ def receptive_field(layers):
         R += (k - 1) * d * stride_prod
         stride_prod *= s
     return R
+
+
+def cross_entropy_and_gradient(X, y, W, b, class_weight=None):
+    """Entropie croisée (pondérée) d'une régression softmax et son gradient.
+
+    z = X W + b ; L = somme_i w_{y_i} (-log p_{i, y_i}) / somme_i w_{y_i}.
+    X : (n, F) ; y : (n,) ; W : (F, C) ; b : (C,). Retourne (L, dL/dW, dL/db).
+    """
+    X = np.asarray(X, dtype=float)
+    y = np.asarray(y, dtype=int)
+    n, C = X.shape[0], W.shape[1]
+
+    z = X @ W + b
+    p = softmax(z, axis=-1)
+
+    if class_weight is None:
+        w = np.ones(n)
+    else:
+        w = np.asarray(class_weight, dtype=float)[y]
+    w_sum = w.sum()
+
+    L = np.sum(w * -np.log(p[np.arange(n), y])) / w_sum
+
+    g = np.zeros((n, C))
+    g[np.arange(n), y] = 1.0
+    G = (w[:, None] * (p - g)) / w_sum
+
+    dW = X.T @ G
+    db = G.sum(axis=0)
+    return L, dW, db
